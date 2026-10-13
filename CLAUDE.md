@@ -12,7 +12,7 @@ The packages themselves live in their own repos (`Mega-Gorilla/KawaPlayer`, `Meg
 
 `.github/workflows/build-listing.yml` checks out `vrchat-community/package-list-action` (a Nuke/.NET project, default branch, not pinned) into `ci/` and runs its `BuildMultiPackageListing` target with `--list-publish-directory Website`. That target:
 
-1. Reads `source.json` and, for each entry in `githubRepos`, queries the GitHub releases of that repo. A release is picked up only if it has a `package.json` and the package `.zip` as release assets. Entries in `packages` are direct zip URLs instead.
+1. Reads `source.json` and, for each entry in `githubRepos`, queries the GitHub releases of that repo. Every `.zip` asset of every release is downloaded, and it is listed only if it has `package.json` at the zip root. A separate `package.json` asset is not needed. Entries in `packages` are direct zip URLs instead.
 2. Writes `index.json` into `Website/`.
 3. Renders `Website/index.html` and `Website/app.js` as **Scriban templates** in place, then the whole `Website/` folder is uploaded as the Pages artifact.
 
@@ -41,7 +41,7 @@ Outside GitHub Actions the target **wipes `--list-publish-directory` first**, so
 
 ## Editing `source.json`
 
-- To add a package, append `"Owner/Repo"` to `githubRepos`. The target repo must already have a release with `package.json` and zip assets.
+- To add a package, append `"Owner/Repo"` to `githubRepos`. The target repo must already have a release with a `.zip` asset that has `package.json` at its root.
 - `url` must stay `https://mega-gorilla.github.io/vpm-repos/index.json`. It is the address VCC fetches the listing and its updates from. `id` is `com.vhub.vpm`.
 - `bannerUrl` is resolved relative to `Website/` (`banner.png`).
 

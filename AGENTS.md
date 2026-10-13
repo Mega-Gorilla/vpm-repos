@@ -44,4 +44,4 @@ Follow the existing `feat:`, `fix:`, `docs:`, and `chore:` commit prefixes. Use 
 
 ## Configuration Safeguards
 
-Keep listing ID `com.vhub.vpm` and URL `https://mega-gorilla.github.io/vpm-repos/index.json` stable. New `githubRepos` entries require releases containing `package.json` and ZIP assets. Keep Fluent UI pinned to the same `2.6.1` URL in both templates and retain plain HTML VCC links. Exclude generated `index.json` and `ci/` from commits.
+Keep listing ID `com.vhub.vpm` and URL `https://mega-gorilla.github.io/vpm-repos/index.json` stable. New `githubRepos` entries require releases with a ZIP asset that has `package.json` at its root. Keep Fluent UI pinned to the same `2.6.1` URL in both templates and retain plain HTML VCC links. Exclude generated `index.json` and `ci/` from commits.
