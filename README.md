@@ -1,43 +1,63 @@
-# VPM Package Listing Template
+# VHub Packages
 
-Starter for making your own Package Listings, including automation for building and publishing them.
+VHub の VRChat 向けパッケージを [VCC（VRChat Creator Companion）](https://vcc.docs.vrchat.com/) で配布するための VPM リポジトリです。
 
-Once you're all set up, you'll be able to update the [`source.json`](source.json) file, and generate a listing which works in the VPM for delivering updates for all the listed packages.
+- 公開ページ：https://mega-gorilla.github.io/vpm-repos/
+- リスティング URL：`https://mega-gorilla.github.io/vpm-repos/index.json`
 
-## ▶ Getting Started
+## VCC への追加
 
-* Press [![Use This Template](https://user-images.githubusercontent.com/737888/185467681-e5fdb099-d99f-454b-8d9e-0760e5a6e588.png)](https://github.com/vrchat-community/template-package-listing/generate)
-to start a new GitHub project based on this template, and follow the directions there. 
-  * Choose a fitting repository name and description.
-  * Set the visibility to 'Public'. You can also choose 'Private' and change it later.
-  * You don't need to select 'Include all branches.'
-* Edit this project on GitHub in your web browser, or clone it repository locally using Git.
-  * If you're unfamiliar with Git and GitHub, [visit GitHub's documentation](https://docs.github.com/en/get-started/quickstart/).
-  
-## Setting up the Automation
+次のどちらかの方法でリポジトリを VCC に追加します。
 
-You'll need to edit some of the files in this template, starting with [`source.json`](source.json):
-- Fill out general information about your listing, such as the [`name`](source.json#L2), [`id`](source.json#L3), [`author`](source.json#L5), [`description`](source.json#L10), etc.
-- Make sure to update the ["url"](source.json#L4) field on line 4, replacing "vrchat-community" with your GitHub username, and "template-package-listing" with your repo name. This is the link that will be used to download your listing once it's published by GitHub. For example, the user "thupper" who made a repo called "thupper-listing" would update the url to "https://thupper.github.io/thupper-listing/index.json".
-- Update the "url" within ["infoLink"](source.json#L11) (on line 11) with the url of this new repo you've created.
-- If you'd like to include packages hosted on GitHub, specify them in [`githubRepos`](source.json#L16).
-- If you'd like to include packages hosted elsewhere as a `.zip` file, specify them in [`packages`](source.json#L19).
-  - You can safely remove either [`githubRepos`](source.json#L16) or [`packages`](source.json#L19) if you're not using them. 
-- Finally, go to the "Settings" page for your repo, then choose "Pages", and look for the heading "Build and deployment". Change the "Source" dropdown from "Deploy from a branch" to "GitHub Actions".
+- **公開ページから**：[公開ページ](https://mega-gorilla.github.io/vpm-repos/)の「Add to VCC」を押すと、VCC のリポジトリ追加画面が開きます。
+- **手動で**：VCC の **Settings > Packages > Add Repository** にリスティング URL を貼り付けて **Add** を押し、内容を確認して **I Understand** を押します。
 
-## 📃 Rebuilding the Listing
+追加後は、VCC の **Manage Project** で対象のプロジェクトを開くと、下記のパッケージを追加できます。更新も VCC から行えます。
 
-Whenever you make a change to the `main` branch, or when you trigger it manually, the 'Build Repo Listing' action will make a new index of all the releases available and publish them as a website hosted fore free on GitHub Pages. This listing can be used by the VPM to keep your package up to date, and the generated index page can serve as a simple landing page with info for your package. The URL for your package will be in the format https://username.github.io/repo-name.
+## 配布中のパッケージ
 
-## 🏠 Customizing the Landing Page
+| パッケージ | パッケージ ID | 概要 |
+|---|---|---|
+| [KawaPlayer](https://github.com/Mega-Gorilla/KawaPlayer) | `com.vhub.kawaplayer` | [YamaPlayer](https://github.com/koorimizuw/YamaPlayer) をフォークした動画プレイヤー。[VHub PlayList](https://playlist.vrc-hub.com) のプレイリスト読み込みや、入室時に自動再生する動画 URL の設定を VRChat 内から行えます。YamaPlayer とは同時にインストールできません。 |
+| [VHub PlaylistViewer](https://github.com/Mega-Gorilla/VhubPlaylistViewer) | `com.vhub.kawaplayer-playlistviewer` | ワールド内で VHub PlayList のプレイリストを閲覧し、その URL を KawaPlayer などの動画プレイヤーに渡すための UI です。 |
 
-The contents of the `Website` directory can be customized to change the appearance of the landing page. Most of the information will be automatically filled in with information from [`source.json`](source.json). Customizing the landing page by hand is not required.
+どちらも Unity 2022.3 と VRChat World SDK（`com.vrchat.worlds`）3.8.1 以上が必要です。使い方・ライセンス・VCC を使わない導入方法は、各パッケージのリポジトリを参照してください。最新のバージョンは公開ページで確認できます。
 
-## Technical Stuff
+## メンテナー向け情報
 
-You are welcome to make your own changes to the automation process to make it fit your needs, and you can create Pull Requests if you have some changes you think we should adopt. Here's some more info on the included automation:
+### 構成
 
-### Build Listing
-[build-listing.yml](.github/workflows/build-listing.yml)
+| パス | 役割 |
+|---|---|
+| `source.json` | リスティングの名前・ID・URL と、配布するパッケージのリポジトリ（`githubRepos`） |
+| `Website/` | 公開ページ。`index.html` と `app.js` は [Scriban](https://github.com/scriban/scriban) のテンプレートで、ビルド時に描画されます |
+| `.github/workflows/build-listing.yml` | 各リポジトリのリリースを集めて `index.json` を生成し、GitHub Pages にデプロイします |
 
-This is a composite action which builds a vpm-compatible [Repo Listing](https://vcc.docs.vrchat.com/vpm/repos) based on the items you've added to your [`source.json`](source.json) file. you've created. In order to find all your releases and combine them into a listing, it checks out [another repository](https://github.com/vrchat-community/package-list-action) which has a [Nuke](https://nuke.build/) project which includes the VPM core lib to have access to its types and methods. This project will be expanded to include more functionality in the future - for now, the action just calls its `BuildRepoListing` target, which calls `RebuildHomePage` when it completes. If you wanted to make an action that just rebuilds the home page, you could call that directly instead - just copy the existing call and replace the target names.
+### リスティングが更新されるタイミング
+
+`build-listing.yml` は [vrchat-community/package-list-action](https://github.com/vrchat-community/package-list-action) で `index.json` と公開ページを生成し、GitHub Pages にデプロイします。次のときに実行されます。
+
+- **KawaPlayer のリリース時**：KawaPlayer の `Build Release` ワークフローを `publish` 付きで実行すると、最後に `repository_dispatch` でこのワークフローが起動します。
+- **VHub PlaylistViewer のリリース時**：自動連携はありません。リリース後に手動で実行してください。
+- **`main` への push**：`source.json`・`Website/` 配下・ワークフロー自体を変更したときに実行されます。README などの変更では実行されません。
+
+手動で実行する場合：
+
+```bash
+gh workflow run build-listing.yml
+```
+
+### パッケージを追加するとき
+
+1. 追加するリポジトリで GitHub Release を作成し、パッケージの `.zip` をアセットとして添付します。`package.json` は zip の直下に置いてください。
+2. `source.json` の `githubRepos` に `"オーナー/リポジトリ名"` を追記して `main` にマージします。マージするとリスティングが再構築されます。
+
+リリースに添付された `.zip` はすべてダウンロードされ、直下に `package.json` があるものだけが一覧に載ります。
+
+### 注意点
+
+- `source.json` の `id`（`com.vhub.vpm`）と `url` は変更しないでください。VCC はこの URL から一覧と更新を取得します。
+- 公開ページの Fluent UI は、`index.html` と `app.js` の両方で同じバージョン（2.6.1）に固定しています。バージョンを指定しない URL にすると、互換性のない新バージョンが読み込まれてページが動かなくなります（[#3](https://github.com/Mega-Gorilla/vpm-repos/issues/3)）。
+- 公開ページのローカルでの描画手順や作業上の注意は [CLAUDE.md](CLAUDE.md) と [AGENTS.md](AGENTS.md) にまとめています。
+
+このリポジトリは [vrchat-community/template-package-listing](https://github.com/vrchat-community/template-package-listing) をもとに作成しています。
