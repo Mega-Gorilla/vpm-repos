@@ -1,6 +1,4 @@
-import { baseLayerLuminance, StandardLuminance } from 'https://unpkg.com/@fluentui/web-components';
-
-const LISTING_URL = "{{ listingInfo.Url }}";
+import { baseLayerLuminance, StandardLuminance } from 'https://unpkg.com/@fluentui/web-components@2.6.1/dist/web-components.min.js';
 
 const PACKAGES = {
 {{~ for package in packages ~}}
@@ -81,14 +79,11 @@ const setTheme = () => {
     const vccUrlField = document.getElementById('vccListingInfoUrlField');
     vccUrlField.select();
     navigator.clipboard.writeText(vccUrlField.value);
-    vccUrlFieldCopy.appearance = 'accent';
+    vccListingInfoUrlFieldCopy.appearance = 'accent';
     setTimeout(() => {
-      vccUrlFieldCopy.appearance = 'neutral';
+      vccListingInfoUrlFieldCopy.appearance = 'neutral';
     }, 1000);
   });
-
-  const vccAddRepoButton = document.getElementById('vccAddRepoButton');
-  vccAddRepoButton.addEventListener('click', () => window.location.assign(`vcc://vpm/addRepo?url=${encodeURIComponent(LISTING_URL)}`));
 
   const vccUrlFieldCopy = document.getElementById('vccUrlFieldCopy');
   vccUrlFieldCopy.addEventListener('click', () => {
@@ -108,6 +103,13 @@ const setTheme = () => {
     rowMoreMenu.hidden = true;
   }
 
+  // Registered once and pointed at the row that opened the menu, so stale rows never trigger a download
+  let rowMoreMenuPackageUrl;
+  const rowMoreMenuDownload = rowMoreMenu.querySelector('#rowMoreMenuDownload');
+  rowMoreMenuDownload.addEventListener('change', () => {
+    window.open(rowMoreMenuPackageUrl, '_blank');
+  });
+
   const rowMenuButtons = document.querySelectorAll('.rowMenuButton');
   rowMenuButtons.forEach(button => {
     button.addEventListener('click', e => {
@@ -115,15 +117,7 @@ const setTheme = () => {
         rowMoreMenu.style.top = `${e.clientY + e.target.clientHeight}px`;
         rowMoreMenu.style.left = `${e.clientX - 120}px`;
         rowMoreMenu.hidden = false;
-
-        const downloadLink = rowMoreMenu.querySelector('#rowMoreMenuDownload');
-        const downloadListener = () => {
-          window.open(e?.target?.dataset?.packageUrl, '_blank');
-        }
-        downloadLink.addEventListener('change', () => {
-          downloadListener();
-          downloadLink.removeEventListener('change', downloadListener);
-        });
+        rowMoreMenuPackageUrl = button.dataset.packageUrl;
 
         setTimeout(() => {
           document.addEventListener('click', hideRowMoreMenu);
@@ -152,11 +146,6 @@ const setTheme = () => {
   const packageInfoDependencies = document.getElementById('packageInfoDependencies');
   const packageInfoKeywords = document.getElementById('packageInfoKeywords');
   const packageInfoLicense = document.getElementById('packageInfoLicense');
-
-  const rowAddToVccButtons = document.querySelectorAll('.rowAddToVccButton');
-  rowAddToVccButtons.forEach((button) => {
-    button.addEventListener('click', () => window.location.assign(`vcc://vpm/addRepo?url=${encodeURIComponent(LISTING_URL)}`));
-  });
 
   const rowPackageInfoButton = document.querySelectorAll('.rowPackageInfoButton');
   rowPackageInfoButton.forEach((button) => {
@@ -218,9 +207,9 @@ const setTheme = () => {
     const vccUrlField = document.getElementById('packageInfoVccUrlField');
     vccUrlField.select();
     navigator.clipboard.writeText(vccUrlField.value);
-    vccUrlFieldCopy.appearance = 'accent';
+    packageInfoVccUrlFieldCopy.appearance = 'accent';
     setTimeout(() => {
-      vccUrlFieldCopy.appearance = 'neutral';
+      packageInfoVccUrlFieldCopy.appearance = 'neutral';
     }, 1000);
   });
 
