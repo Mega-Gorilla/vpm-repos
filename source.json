@@ -13,8 +13,7 @@
     },
     "bannerUrl": "banner.png",
     "githubRepos": [
-        "Mega-Gorilla/KawaPlayer",
-        "Mega-Gorilla/VhubPlaylistViewer"
+        "Mega-Gorilla/KawaPlayer"
     ],
     "packages": []
 }

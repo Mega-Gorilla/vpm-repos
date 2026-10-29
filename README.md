@@ -19,9 +19,10 @@ VHub の VRChat 向けパッケージを [VCC（VRChat Creator Companion）](htt
 | パッケージ | パッケージ ID | 概要 |
 |---|---|---|
 | [KawaPlayer](https://github.com/Mega-Gorilla/KawaPlayer) | `com.vhub.kawaplayer` | [YamaPlayer](https://github.com/koorimizuw/YamaPlayer) をフォークした動画プレイヤー。[VHub PlayList](https://playlist.vrc-hub.com) のプレイリスト読み込みや、入室時に自動再生する動画 URL の設定を VRChat 内から行えます。YamaPlayer とは同時にインストールできません。 |
-| [VHub PlaylistViewer](https://github.com/Mega-Gorilla/VhubPlaylistViewer) | `com.vhub.kawaplayer-playlistviewer` | ワールド内で VHub PlayList のプレイリストを閲覧し、その URL を KawaPlayer などの動画プレイヤーに渡すための UI です。 |
 
-どちらも Unity 2022.3 と VRChat World SDK（`com.vrchat.worlds`）3.8.1 以上が必要です。使い方・ライセンス・VCC を使わない導入方法は、各パッケージのリポジトリを参照してください。最新のバージョンは公開ページで確認できます。
+Unity 2022.3 と VRChat World SDK（`com.vrchat.worlds`）3.10.2 以上が必要です。使い方・ライセンス・VCC を使わない導入方法は、パッケージのリポジトリを参照してください。最新のバージョンは公開ページで確認できます。
+
+VHub PlaylistViewer（`com.vhub.kawaplayer-playlistviewer`）は、2026-10-29 に配信を終えました（[#7](https://github.com/Mega-Gorilla/vpm-repos/issues/7)）。入っているプロジェクトはそのまま動きますが、更新はありません。VCC でパッケージが見つからないと出たときは、プロジェクトから外してください。
 
 ## メンテナー向け情報
 
@@ -38,7 +39,6 @@ VHub の VRChat 向けパッケージを [VCC（VRChat Creator Companion）](htt
 `build-listing.yml` は [vrchat-community/package-list-action](https://github.com/vrchat-community/package-list-action) で `index.json` と公開ページを生成し、GitHub Pages にデプロイします。次のときに実行されます。
 
 - **KawaPlayer のリリース時**：KawaPlayer の `Build Release` ワークフローを `publish` 付きで実行すると、最後に `repository_dispatch` でこのワークフローが起動します。
-- **VHub PlaylistViewer のリリース時**：自動連携はありません。リリース後に手動で実行してください。
 - **`main` への push**：`source.json`・`Website/` 配下・ワークフロー自体を変更したときに実行されます。README などの変更では実行されません。
 
 手動で実行する場合：
