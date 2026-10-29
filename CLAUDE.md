@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A VRChat Package Manager (VPM) repo listing for VHub packages, forked from `vrchat-community/template-package-listing`. It has no source code of its own to build or test: CI reads `source.json`, collects every release of the listed packages, and publishes `index.json` plus a landing page to GitHub Pages at https://mega-gorilla.github.io/vpm-repos/. Users add `https://mega-gorilla.github.io/vpm-repos/index.json` to VCC.
 
-The packages themselves live in their own repos (`Mega-Gorilla/KawaPlayer`, `Mega-Gorilla/VhubPlaylistViewer`). Package code changes and releases happen there, not here.
+The package itself lives in its own repo (`Mega-Gorilla/KawaPlayer`). Package code changes and releases happen there, not here. VHub PlaylistViewer (`Mega-Gorilla/VhubPlaylistViewer`, `com.vhub.kawaplayer-playlistviewer`) was listed until 2026-10-29; it was discontinued and taken out of `githubRepos` (#7). Its repo and its 0.1.0 release stay on GitHub.
 
 ## How the listing is built
 

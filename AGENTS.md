@@ -2,7 +2,7 @@
 
 ## Project Structure & Module Organization
 
-This repository publishes the VHub VPM listing. Package implementations live in `Mega-Gorilla/KawaPlayer` and `Mega-Gorilla/VhubPlaylistViewer`.
+This repository publishes the VHub VPM listing. The package implementation lives in `Mega-Gorilla/KawaPlayer`. VHub PlaylistViewer (`Mega-Gorilla/VhubPlaylistViewer`) was discontinued and taken out of the listing on 2026-10-29 (#7).
 
 - `source.json`: listing metadata and package repository references.
 - `Website/`: Scriban templates (`index.html`, `app.js`), CSS, banner, and favicon.
